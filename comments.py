@@ -20,11 +20,14 @@ def get_comments(video_id):
 
     comments = []
 
+    # loop through video results
     while video_response:
         for item in video_response['items']:
+            # extract comment
             comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
             comments.append(comment)
 
+        # since response is limited, we need next page token to get the more comments
         if 'nextPageToken' in video_response:
             video_response = youtube.commentThreads().list(
                 part='snippet,replies',
